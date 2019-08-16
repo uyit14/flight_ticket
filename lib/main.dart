@@ -21,6 +21,8 @@ const TextStyle dropDownLabelStyle = TextStyle(
 const TextStyle dropDownPopUpMenuStyle = TextStyle(
     color: Colors.black, fontSize: 16);
 
+final _searchFieldController = TextEditingController(text: locations[1]);
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -128,7 +130,7 @@ class _HomeScreenTopToPartState extends State<HomeScreenTopToPart> {
                     elevation: 5,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextField(
-                      controller: TextEditingController(text: locations[1]),
+                      controller: _searchFieldController,
                       style: dropDownPopUpMenuStyle,
                       cursorColor: appTheme.primaryColor,
                       decoration: InputDecoration(
@@ -139,7 +141,15 @@ class _HomeScreenTopToPartState extends State<HomeScreenTopToPart> {
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             child: InkWell(
                                 onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => FlightListingScreen()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          InheritedFlightListing(
+                                              fromLocation: locations[selectedLocationIndex],
+                                              toLocation: _searchFieldController.text,
+                                              child: FlightListingScreen()
+                                          )));
                                 },
                                 child: Icon(Icons.search, color: Colors.black)),
                           ),

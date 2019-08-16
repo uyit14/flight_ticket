@@ -7,6 +7,21 @@ final Color discountBackgroundColor = Color(0xFFFFE08D);
 final Color flightBorderColor = Color(0xFFE6E6E6);
 final Color chipBackgroundColor = Color(0xFFF6F6F6);
 
+class InheritedFlightListing extends InheritedWidget{
+  final fromLocation, toLocation;
+
+
+  InheritedFlightListing({this.fromLocation, this.toLocation, Widget child}) : super(child : child);
+
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) {
+    return true;
+  }
+
+  static InheritedFlightListing of(BuildContext context) =>
+      context.inheritFromWidgetOfExactType(InheritedFlightListing);
+}
+
 class FlightListingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,6 +54,9 @@ class FlightListingScreen extends StatelessWidget {
 }
 
 class FlightListTopPart extends StatelessWidget {
+  final fromLocation, toLocation;
+  FlightListTopPart({this.fromLocation, this.toLocation});
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -66,7 +84,7 @@ class FlightListTopPart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Bostom (BOS)",
+                        '${InheritedFlightListing.of(context).fromLocation}',
                         style: TextStyle(fontSize: 16),
                       ),
                       Divider(
@@ -74,7 +92,7 @@ class FlightListTopPart extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "New York City (JFK)",
+                        '${InheritedFlightListing.of(context).toLocation}',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       )
@@ -144,7 +162,7 @@ class FlightCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: Colors.deepOrange)),
+                border: Border.all(color: Colors.grey[400])),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
