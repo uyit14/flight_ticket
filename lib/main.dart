@@ -2,6 +2,7 @@ import 'package:flight_ticket/CustomAppBottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'CustomShapeClipper.dart';
+import 'flight_list.dart';
 
 void main() => runApp(MaterialApp(
       title: 'Flight ticket',
@@ -15,10 +16,10 @@ const Color secondColor = Color(0xFFEF772C);
 ThemeData appTheme =
     ThemeData(primaryColor: Color(0xFFF3791A), fontFamily: 'Oxygen');
 List<String> locations = ['Boston (BOS)', 'New York City (JFK)'];
-const TextStyle dropDownLabelStyle =
-    TextStyle(color: Colors.white, fontSize: 16);
-const TextStyle dropDownPopUpMenuStyle =
-    TextStyle(color: Colors.black, fontSize: 16);
+const TextStyle dropDownLabelStyle = TextStyle(
+    color: Colors.white, fontSize: 16);
+const TextStyle dropDownPopUpMenuStyle = TextStyle(
+    color: Colors.black, fontSize: 16);
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -28,7 +29,7 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
-          children: <Widget>[HomeScreenTopToPart(), HomeScreenBottomPart()],
+          children: <Widget>[HomeScreenTopToPart(), HomeScreenBottomPart(), HomeScreenBottomPart()],
         ),
       ),
     );
@@ -45,6 +46,7 @@ class HomeScreenTopToPart extends StatefulWidget {
 class _HomeScreenTopToPartState extends State<HomeScreenTopToPart> {
   var selectedLocationIndex = 0;
   bool isFlightSelected = true;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -135,7 +137,11 @@ class _HomeScreenTopToPartState extends State<HomeScreenTopToPart> {
                           suffix: Material(
                             elevation: 2,
                             borderRadius: BorderRadius.all(Radius.circular(30)),
-                            child: Icon(Icons.search, color: Colors.black),
+                            child: InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => FlightListingScreen()));
+                                },
+                                child: Icon(Icons.search, color: Colors.black)),
                           ),
                           border: InputBorder.none),
                     ),
@@ -184,6 +190,7 @@ class ChoiceChip extends StatefulWidget {
   final IconData iconData;
   final String text;
   final isFlightSelected;
+
   ChoiceChip(this.iconData, this.text, this.isFlightSelected);
 
   @override
@@ -274,6 +281,7 @@ final formatCurrency = NumberFormat.simpleCurrency();
 class CityCard extends StatelessWidget {
   final String imagePath, cityName, monthYear, disscount;
   final double oldPrice, newPrice;
+
   CityCard(this.imagePath, this.cityName, this.monthYear, this.disscount,
       this.oldPrice, this.newPrice);
 
@@ -361,7 +369,9 @@ class CityCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 4,),
+          SizedBox(
+            height: 4,
+          ),
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
