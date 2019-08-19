@@ -409,3 +409,6 @@ class CityCard extends StatelessWidget {
     );
   }
 }
+
+//Convert json to dart
+//https://javiercbk.github.io/json_to_dart/
